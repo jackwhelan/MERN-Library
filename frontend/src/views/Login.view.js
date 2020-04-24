@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import TopNav from '../components/TopNav.component';
+import AppNavbar from '../components/AppNavbar.component';
 import LoginForm from '../components/LoginForm.component';
 
 class LoginView extends Component {
     render() {
         return (
             <div>
-                <TopNav/>
+                <AppNavbar token={localStorage.getItem('TOKEN')} />
                 <div className="container">
                     <div className="card bg-light pb-4">
                         <article className="card-body mx-auto" style={{ maxWidth: "400px" }}>

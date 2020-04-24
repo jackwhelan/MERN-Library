@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import TopNav from '../components/TopNav.component';
 import RegistrationForm from '../components/RegistrationForm.component';
+import AppNavbar from '../components/AppNavbar.component';
 
 class RegisterView extends Component {
     render() {
         return (
             <div>
-                <TopNav/>
+                <AppNavbar token={localStorage.getItem('TOKEN')} />
                 <div className="container">
                     <div className="card bg-light pb-4">
                         <article className="card-body mx-auto" style={{maxWidth:"400px"}}>

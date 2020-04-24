@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TopNav from '../components/TopNav.component';
+import AppNavbar from '../components/AppNavbar.component';
 import Alert from '../components/Alert.component';
 
 class HomeView extends Component {
@@ -11,10 +11,11 @@ class HomeView extends Component {
         }
 
         return (
-            <div className="container">
-                <TopNav/>
-                {alertIfInfo}
-                home
+            <div>
+                <AppNavbar token={localStorage.getItem('TOKEN')} />
+                <div className="container">
+                    {alertIfInfo}
+                </div>
             </div>
         )
     }
