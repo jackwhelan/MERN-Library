@@ -1,0 +1,11 @@
+.infoComponent {
+    border-style: solid;
+    border-color: black;
+    border-radius: 16px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
