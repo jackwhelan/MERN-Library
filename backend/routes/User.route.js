@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
 const { User, RegistrationValidation, UpdateValidation } = require('../models/User.model');
 
 // ROUTE: /user
@@ -166,4 +167,54 @@ router.post('/register', (req, res) => {
                 }
             });
     }
+});
+
+// ROUTE: /user/login
+// METHOD: POST
+// DESCRIPTION: TAKE EMAIL AND PASSWORD - RETURN JWT TOKEN IF CORRECT
+router.post('/login', (req, res) => {
+    User.findOne({
+        username: req.body.username
+    })
+        .then(user => {
+            if (user) {
+                if (bcrypt.compareSync(req.body.password, user.password)) {
+                    const payload = {
+                        id: user._id,
+                        firstname: user.firstname,
+                        lastname: user.lastname,
+                        email: user.email,
+                        created: user.created
+                    }
+
+                    let token = jwt.sign(payload, process.env.SECRET, {
+                        expiresIn: "1h"
+                    });
+
+                    return res.json({
+                        status: "success",
+                        header: "Success",
+                        message: "Logged in successfully.",
+                        token: token
+                    });
+                }
+                else {
+                    return res.json({
+                        status: "error",
+                        header: "Error",
+                        message: "The password you entered is incorrect."
+                    });
+                }
+            }
+            else {
+                return res.json({
+                    status: "error",
+                    header: "Error",
+                    message: "The username you entered does not exist."
+                });
+            }
+        })
+        .catch(err => {
+            res.json({ error: err });
+        });
 });
