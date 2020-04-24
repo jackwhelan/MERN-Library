@@ -49,5 +49,27 @@ function registrationValidation(user) {
 
     return validation;
 }
+
+function updateValidation(user) {
+    const schema = Joi.object({
+        firstname: Joi.string()
+            .min(2)
+            .max(30)
+            .required(),
+        lastname: Joi.string()
+            .min(2)
+            .max(30)
+            .required(),
+        email: Joi.string()
+            .email()
+            .required()
+    });
+
+    const validation = schema.validate(user);
+
+    return validation;
+}
+
 exports.User = User;
 exports.RegistrationValidation = registrationValidation;
+exports.UpdateValidation = registrationValidation;
