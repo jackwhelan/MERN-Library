@@ -52,3 +52,38 @@ router.get('/:id', async (req, res) => {
             });
         });
 });
+
+// ROUTE: /user/:id
+// METHOD: DELETE
+// DESCRIPTION: DELETE A SINGLE USER BY ID
+router.delete('/:id', (req, res) => {
+    User.findOne({
+        _id: req.params.id
+    })
+        .then(user => {
+            user.remove()
+                .then(() => {
+                    res.json({
+                        status: "success",
+                        header: "Success",
+                        message: "User successfully deleted."
+                    });
+                })
+                .catch(err => {
+                    res.json({
+                        status: "error",
+                        header: "Error",
+                        message: "User could not be deleted.",
+                        error: err
+                    });
+                });
+        })
+        .catch(err => {
+            res.json({
+                status: "error",
+                header: "Error",
+                message: "The user could not be deleted from the database.",
+                error: err
+            });
+        });
+});
