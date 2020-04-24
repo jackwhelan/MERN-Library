@@ -27,3 +27,28 @@ router.get('/', async (req, res) => {
             });
         });
 });
+
+// ROUTE: /user/:id
+// METHOD: GET
+// DESCRIPTION: RETRIEVE A SINGLE USER BY ID
+router.get('/:id', async (req, res) => {
+    User.findOne({
+        _id: req.params.id
+    })
+        .then(user => {
+            res.json({
+                status: "success",
+                header: "Success",
+                message: "User loaded from the database successfully.",
+                data: user
+            });
+        })
+        .catch(err => {
+            res.json({
+                status: "error",
+                header: "Error",
+                message: "The user could not be loaded from the database.",
+                error: err
+            });
+        });
+});
