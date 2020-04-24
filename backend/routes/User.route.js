@@ -218,3 +218,58 @@ router.post('/login', (req, res) => {
             res.json({ error: err });
         });
 });
+
+// ROUTE: /user/:id
+// METHOD: PATCH
+// DESCRIPTION: ALTER A USER BY ID
+router.patch('/:id', (req, res) => {
+    var UID = req.params.id;
+
+    var conditions = {
+        _id: UID
+    }
+
+    var update = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email
+    }
+
+    const { error } = UpdateValidation(update);
+    if (error) return res.status(400).json({
+        status: 'error',
+        header: error.details[0].path[0],
+        message: error.details[0].message,
+    });
+
+    User.findOne({ email: req.body.email }).then(emailMatch => {
+        if (emailMatch && emailMatch._id != UID) {
+            return res.json({
+                status: "error",
+                header: "Error",
+                message: "This email address is already registered."
+            });
+        }
+    });
+
+    User.findOneAndUpdate(
+        conditions,
+        update,
+        { useFindAndModify: false }
+    )
+        .then(user => {
+            return res.json({
+                status: "success",
+                header: "Success",
+                message: "The user details you submitted are now stored and up to date.",
+                data: user
+            });
+        })
+        .catch(err => {
+            return res.json({
+                err
+            });
+        });
+})
+
+module.exports = router;
