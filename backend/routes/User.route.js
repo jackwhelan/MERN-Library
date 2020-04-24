@@ -174,7 +174,7 @@ router.post('/register', (req, res) => {
 // DESCRIPTION: TAKE EMAIL AND PASSWORD - RETURN JWT TOKEN IF CORRECT
 router.post('/login', (req, res) => {
     User.findOne({
-        username: req.body.username
+        email: req.body.email
     })
         .then(user => {
             if (user) {
@@ -187,9 +187,7 @@ router.post('/login', (req, res) => {
                         created: user.created
                     }
 
-                    let token = jwt.sign(payload, process.env.SECRET, {
-                        expiresIn: "1h"
-                    });
+                    let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
 
                     return res.json({
                         status: "success",
