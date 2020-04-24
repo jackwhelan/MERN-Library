@@ -7,8 +7,14 @@ class RegisterView extends Component {
         return (
             <div>
                 <TopNav/>
-                <div className="container mt-5">
-                    <RegistrationForm />
+                <div className="container">
+                    <div className="card bg-light pb-4">
+                        <article className="card-body mx-auto" style={{maxWidth:"400px"}}>
+                            <h4 className="card-title mt-3 text-center">Registration</h4>
+                            <p className="text-center">Get started with your free account</p>
+                            <RegistrationForm />
+                        </article>
+                    </div>
                 </div>
             </div>
         )
