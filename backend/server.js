@@ -14,6 +14,18 @@ app.use(function (req, res, next) {
     next();
 });
 
+mongoose
+    .connect(process.env.MONGO_URI, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        useCreateIndex: true
+    })
+    .then(() => {
+        console.log(`DB Connected!`);
+    })
+    .catch(err => {
+        console.log(`DB Connection Error: ${err.message}`);
+    });
 app.listen(process.env.PORT, () => {
     console.log(`Server listening on port ${process.env.PORT}`)
 });
