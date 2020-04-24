@@ -14,6 +14,8 @@ app.use(function (req, res, next) {
     next();
 });
 
+const UserRoute = require('./routes/User.route');
+
 mongoose
     .connect(process.env.MONGO_URI, {
         useUnifiedTopology: true,
@@ -26,6 +28,9 @@ mongoose
     .catch(err => {
         console.log(`DB Connection Error: ${err.message}`);
     });
+
+app.use('/user', UserRoute);
+
 app.listen(process.env.PORT, () => {
     console.log(`Server listening on port ${process.env.PORT}`)
 });
