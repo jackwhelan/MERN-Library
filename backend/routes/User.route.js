@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { User, RegistrationValidation, UpdateValidation } = require('../models/User.model');
 
 // ROUTE: /user
@@ -86,4 +88,82 @@ router.delete('/:id', (req, res) => {
                 error: err
             });
         });
+});
+
+// ROUTE: /user/register
+// METHOD: POST
+// DESCRIPTION: DELETE A SINGLE USER BY ID
+router.post('/register', (req, res) => {
+    const { error } = RegistrationValidation(req.body);
+    if (error) {
+        return res.json({
+            status: 'error',
+            header: 'Error - ' + error.details[0].path[0],
+            message: error.details[0].message
+        });
+    }
+    else {
+        const newUser = new User({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            password: req.body.password
+        });
+
+        User.findOne({
+            email: req.body.email
+        })
+            .then(emailMatch => {
+                if (emailMatch) {
+                    return res.json({
+                        status: 'error',
+                        header: 'Error',
+                        message: 'That email address is already taken.'
+                    });
+                }
+                else {
+                    bcrypt.genSalt(10, (err, salt) => {
+                        if (err) {
+                            return res.json({
+                                status: 'error',
+                                header: 'Error',
+                                message: 'There was an issue salting the password. Contact a system administrator.'
+                            });
+                        }
+                        else {
+                            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                                if (err) {
+                                    return res.json({
+                                        status: 'error',
+                                        header: 'Error',
+                                        message: 'There was an issue hashing the password. Contact a system administrator.'
+                                    });
+                                }
+                                else {
+                                    newUser.password = hash;
+
+                                    newUser.save()
+                                        .then(post => {
+                                            return res.json({
+                                                status: 'success',
+                                                header: 'Success',
+                                                message: 'The user has been created successfully.',
+                                                data: post
+                                            });
+                                        })
+                                        .catch(err => {
+                                            return res.json({
+                                                status: 'error',
+                                                header: 'Error',
+                                                message: 'There was an issue saving the user to the database. Contact a system administrator.',
+                                                error: err
+                                            });
+                                        });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+    }
 });
