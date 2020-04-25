@@ -8,6 +8,7 @@ import RegisterView from './views/Register.view';
 import LoginView from './views/Login.view';
 import GoodbyeView from './views/Goodbye.view';
 import LibraryView from './views/Library.view';
+import MyBooks from './views/MyBooks.view';
 import AccountView from './views/Account.view';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/Register" component={RegisterView} />
             <Route path="/Login" component={LoginView} />
             <Route path="/Library" component={LibraryView} />
+            <Route path="/MyBooks" component={MyBooks} />
             <Route path="/Goodbye" component={GoodbyeView} />
             <Route path="/Account" component={AccountView} />
         </Switch>

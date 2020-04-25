@@ -38,6 +38,12 @@ class AppNavbar extends Component {
                     <NavItem>
                         <NavLink href="/"><i className="fas fa-home"></i> Home</NavLink>
                     </NavItem>
+                    <NavItem>
+                        <NavLink href="/Library"><i className="fas fa-book"></i> Library</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="/MyBooks"><i className="fas fa-bookmark"></i> My Books</NavLink>
+                    </NavItem>
                 </Nav>
             )
         }
