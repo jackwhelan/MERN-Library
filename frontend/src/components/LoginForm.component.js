@@ -61,8 +61,8 @@ class LoginForm extends Component {
                 if(this.state.response.token)
                 {
                     localStorage.setItem('TOKEN', this.state.response.token);
+                    window.location.reload();
                 }
-                window.location.reload();
             })
             .catch(err => console.log(err));
     }
