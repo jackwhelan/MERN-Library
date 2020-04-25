@@ -222,52 +222,73 @@ router.post('/login', (req, res) => {
 // DESCRIPTION: ALTER A USER BY ID
 router.patch('/:id', (req, res) => {
     var UID = req.params.id;
+    
+    User.findById(UID)
+    .then(user => {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+            var update = {
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                email: req.body.email,
+                password: user.password
+            }
 
-    var conditions = {
-        _id: UID
-    }
+            const { error } = UpdateValidation(update);
+            if (error) return res.status(400).json({
+                status: 'error',
+                header: error.details[0].path[0],
+                message: error.details[0].message,
+            });
 
-    var update = {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email
-    }
+            User.findOne({ email: req.body.email }).then(emailMatch => {
+                if (emailMatch && emailMatch._id != UID) {
+                    return res.json({
+                        status: "error",
+                        header: "Error",
+                        message: "This email address is already registered."
+                    });
+                }
+            });
 
-    const { error } = UpdateValidation(update);
-    if (error) return res.status(400).json({
-        status: 'error',
-        header: error.details[0].path[0],
-        message: error.details[0].message,
-    });
+            User.findOneAndUpdate(
+                UID,
+                update,
+                { useFindAndModify: false }
+            )
+                .then(user => {
+                    const payload = {
+                        id: user._id,
+                        firstname: req.body.firstname,
+                        lastname: req.body.lastname,
+                        email: req.body.email,
+                        created: user.created
+                    }
 
-    User.findOne({ email: req.body.email }).then(emailMatch => {
-        if (emailMatch && emailMatch._id != UID) {
+                    let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+
+                    return res.json({
+                        status: "success",
+                        header: "Success",
+                        message: "The user details you submitted are now stored and up to date.",
+                        token: token
+                    });
+                })
+                .catch(err => {
+                    return res.json({
+                        err
+                    });
+                });
+        }
+        else
+        {
             return res.json({
                 status: "error",
                 header: "Error",
-                message: "This email address is already registered."
+                message: "The password you entered is incorrect."
             });
         }
-    });
-
-    User.findOneAndUpdate(
-        conditions,
-        update,
-        { useFindAndModify: false }
-    )
-        .then(user => {
-            return res.json({
-                status: "success",
-                header: "Success",
-                message: "The user details you submitted are now stored and up to date.",
-                data: user
-            });
-        })
-        .catch(err => {
-            return res.json({
-                err
-            });
-        });
+    })
+    .catch(err => console.log(err))
 })
 
 module.exports = router;
