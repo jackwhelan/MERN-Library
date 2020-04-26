@@ -47,6 +47,10 @@ body {
     color: #16425B;
 }
 
+.border-lightComp {
+    border-color: rgba(0, 0, 0, 0.125);
+}
+
 .text-light-custom {
     color: rgba(255,255,255,.5);
 }
