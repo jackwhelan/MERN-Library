@@ -103,6 +103,7 @@ class LoginForm extends Component {
                     value={this.state.user.email}
                     onChange={this.handleEmailChange}
                     label="Email Address"
+                    required={true}
                 />
 
                 <FormInput
@@ -113,6 +114,7 @@ class LoginForm extends Component {
                     min="6"
                     max="100"
                     label="Password"
+                    required={true}
                 />
 
                 <button type="submit" className="btn btn-primary btn-block">Log In</button>

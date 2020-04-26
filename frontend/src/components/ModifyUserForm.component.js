@@ -133,6 +133,7 @@ class RegistrationForm extends Component {
                     min="2"
                     max="30"
                     label="First Name"
+                    required={true}
                 />
 
                 <FormInput
@@ -143,6 +144,7 @@ class RegistrationForm extends Component {
                     min="2"
                     max="30"
                     label="Last Name"
+                    required={true}
                 />
 
                 <FormInput
@@ -151,6 +153,7 @@ class RegistrationForm extends Component {
                     value={this.state.user.email}
                     onChange={this.handleEmailChange}
                     label="Email Address"
+                    required={true}
                 />
 
                 <hr></hr>
@@ -164,6 +167,7 @@ class RegistrationForm extends Component {
                     min="6"
                     max="100"
                     label="Password"
+                    required={true}
                 />
 
                 <button type="submit" className="btn btn-primary btn-block">Submit Changes</button>
