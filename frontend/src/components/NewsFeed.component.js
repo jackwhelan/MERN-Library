@@ -76,7 +76,11 @@ class News extends Component {
         }
         else
         {
-            return "hi"
+            return (
+                <div className="core-cont bg-lightgrey mt-4 text-center">
+                    <h1>Loading News...</h1>
+                </div>
+            )
         }
     }
 }
