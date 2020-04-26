@@ -15,6 +15,9 @@ app.use(cors());
 const UserRoute = require('./routes/User.route');
 app.use('/user', UserRoute);
 
+const BookRoute = require('./routes/Book.route');
+app.use('/book', BookRoute);
+
 // Database Connection
 mongoose
     .connect(process.env.MONGO_URI, {
