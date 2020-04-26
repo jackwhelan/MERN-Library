@@ -35,7 +35,7 @@ class MyBooksView extends Component {
                 state: {
                     status: "warning",
                     header: "Access Restricted",
-                    message: "You must be signed in to access the Library page."
+                    message: "You must be signed in to access your MyBooks profile."
                 }
             }} />
         }

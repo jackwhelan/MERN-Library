@@ -1,10 +1,37 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import AppNavbar from '../components/AppNavbar.component';
 import ModifyUserForm from '../components/ModifyUserForm.component';
 
 class AccountView extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            redirect: false
+        }
+    }
+    componentDidMount() {
+        if (!localStorage.getItem('TOKEN')) {
+            this.setState({
+                redirect: true
+            });
+        }
+    }
+
     render() {
+        if (this.state.redirect === true) {
+            return <Redirect to={{
+                pathname: "/",
+                state: {
+                    status: "warning",
+                    header: "Access Restricted",
+                    message: "You must be signed in to access your Account page."
+                }
+            }} />
+        }
+
         return (
             <div>
                 <AppNavbar token={localStorage.getItem('TOKEN')} />
