@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AppNavbar from '../components/AppNavbar.component';
 import Alert from '../components/Alert.component';
 import { Redirect } from 'react-router-dom';
+import Search from '../components/Search.component';
 
 class LibraryView extends Component {
     state = {
@@ -22,8 +23,10 @@ class LibraryView extends Component {
         }
     }
 
-    componentDidUpdate() {
-        console.log('updated')
+    handleSearchChange = (event) => {
+        this.setState({
+            search: event.target.value
+        });
     }
 
     render() {
@@ -49,6 +52,7 @@ class LibraryView extends Component {
                 <AppNavbar token={localStorage.getItem('TOKEN')} />
                 <div className="container">
                     {alertIfInfo}
+                    <Search/>
                 </div>
             </div>
         )
