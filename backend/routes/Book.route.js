@@ -6,7 +6,7 @@ const { Book } = require('../models/Book.model');
 router.get('/', async (req, res) => {
     const showAmt = parseInt(req.query.showAmt);
     const search = req.query.search;
-    const minRating = 4
+
     Book.find({$text: {$search: search}})
     .limit(showAmt)
     .then(books => {

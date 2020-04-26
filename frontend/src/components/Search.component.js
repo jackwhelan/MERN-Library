@@ -13,26 +13,28 @@ class Search extends Component {
         this.setState({
             search: event.target.value,
             showAmt: 10
+        }, () => {
+            this.fetchQuery();
         });
-        this.fetchQuery();
     }
 
     fetchQuery = () => {
-        var showAmt = this.state.showAmt
+        var showAmt = this.state.showAmt;
         var search = this.state.search;
-        axios.get("http://localhost:5000/book?showAmt=" + showAmt +"&search=" + search)
-        .then(results => {
-            this.setState({
-                results: results.data
+        axios.get("http://localhost:5000/book?showAmt=" + showAmt + "&search=" + search)
+            .then(results => {
+                this.setState({
+                    results: results.data
+                })
             })
-        })
     }
 
     showMore = () => {
         this.setState({
             showAmt: this.state.showAmt + 5
+        }, () => {
+            this.fetchQuery();
         });
-        this.fetchQuery();
     }
 
     render() {
