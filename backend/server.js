@@ -18,6 +18,9 @@ app.use('/user', UserRoute);
 const BookRoute = require('./routes/Book.route');
 app.use('/book', BookRoute);
 
+const MyBookRoute = require('./routes/MyBook.route');
+app.use('/MyBook', MyBookRoute);
+
 // Database Connection
 mongoose
     .connect(process.env.MONGO_URI, {

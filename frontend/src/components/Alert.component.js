@@ -18,7 +18,7 @@ class Alert extends Component {
             bgColor = '#5cb85c';
         }
         else {
-            bgColor = '#d9534f';
+            bgColor = '#f0ad4e';
         }
 
         this.setState({

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AppNavbar from '../components/AppNavbar.component';
 import Alert from '../components/Alert.component';
 import { Redirect } from 'react-router-dom';
+import MyBooks from '../components/MyBooks.component';
 
 class MyBooksView extends Component {
     state = {
@@ -45,6 +46,7 @@ class MyBooksView extends Component {
                 <AppNavbar token={localStorage.getItem('TOKEN')} />
                 <div className="container">
                     {alertIfInfo}
+                    <MyBooks/>
                 </div>
             </div>
         )

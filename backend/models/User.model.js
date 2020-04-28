@@ -22,6 +22,9 @@ const UserSchema = new Schema({
     created: {
         type: Date,
         default: Date.now
+    },
+    MyBooks: {
+        type: Array
     }
 });
 
