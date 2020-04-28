@@ -15,7 +15,8 @@ class Search extends Component {
     handleSearchChange = (event) => {
         this.setState({
             search: event.target.value,
-            showAmt: 5
+            showAmt: 5,
+            book_added: undefined
         }, () => {
             this.fetchQuery();
         });
